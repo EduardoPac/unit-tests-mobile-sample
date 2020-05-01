@@ -8,7 +8,7 @@ namespace MobileSample.Core.Models
     {
         public string Name { get; set; }
         public string Email { get; set; }
-        public string Age { get; set; }
+        public int Age { get; set; }
         public EConductorClass ConductorClass { get; set; }
         public string[] VehicleIds { get; set; }
         public List<Vehicle> Vehicles { get; set; }
@@ -18,7 +18,7 @@ namespace MobileSample.Core.Models
         {
             return !string.IsNullOrWhiteSpace(Id) &&
                    !string.IsNullOrWhiteSpace(Name) &&
-                   !string.IsNullOrWhiteSpace(Age) &&
+                   !string.IsNullOrWhiteSpace(CompanyId) &&
                    VehicleIds.Any();
         }
         

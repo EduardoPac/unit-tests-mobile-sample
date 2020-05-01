@@ -4,7 +4,7 @@ namespace MobileSample.Core.Enums
     {
         Exotic,
         Tuner,
-        OffRoad,
-        Muscle,
+        OffRoad, 
+        Muscle
     }
 }

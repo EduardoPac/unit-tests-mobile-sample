@@ -23,6 +23,14 @@ namespace MobileSample.Core.Services
 
         public async Task<IEnumerable<User>> GetAll() => await Task.Run(_userRepository.GetAll);
 
+        public async Task<IEnumerable<User>> GetByCompanyId(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                return null;
+
+            return await Task.Run(() => _userRepository.GetByCompanyId(id));
+        }
+
         public async Task<User> GetById(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -31,17 +39,17 @@ namespace MobileSample.Core.Services
             return await Task.Run(() => _userRepository.GetById(id));
         }
 
-        public async Task<bool> Import(List<User> users)
+        public async Task<bool> Import(List<User> manufacturers)
         {
-            if (users == null || users.Any(user => user.ValidateRequired()))
+            if (manufacturers == null || manufacturers.Any(user => !user.ValidateRequired()))
                 return false;
 
-            return await Task.Run(() => _userRepository.Import(users));
+            return await Task.Run(() => _userRepository.Import(manufacturers));
         }
 
         public async Task<bool> Save(User user)
         {
-            if (user.ValidateRequired())
+            if (!user.ValidateRequired())
                 return false;
 
             return await Task.Run(() => _userRepository.Save(user));

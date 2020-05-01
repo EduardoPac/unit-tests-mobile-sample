@@ -7,13 +7,18 @@ namespace MobileSample.Core.Repositories
     public interface IVehicleRepository : IBaseRepository<Vehicle>
     {
         IEnumerable<Vehicle> GetByIds(string[] ids);
-        IEnumerable<Vehicle> GetByConstructorId(string id);
+        IEnumerable<Vehicle> GetByManufacturerId(string id);
         IEnumerable<Vehicle> GetByVehicleClass(EVehicleClass vehicleClass);
     }
 
     public class VehicleRepository : IVehicleRepository
     {
         public IEnumerable<Vehicle> GetAll()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public IEnumerable<Vehicle> GetByCompanyId(string id)
         {
             throw new System.NotImplementedException();
         }
@@ -38,7 +43,7 @@ namespace MobileSample.Core.Repositories
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Vehicle> GetByConstructorId(string id)
+        public IEnumerable<Vehicle> GetByManufacturerId(string id)
         {
             throw new System.NotImplementedException();
         }

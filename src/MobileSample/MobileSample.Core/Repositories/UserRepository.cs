@@ -16,6 +16,11 @@ namespace MobileSample.Core.Repositories
             throw new System.NotImplementedException();
         }
 
+        public IEnumerable<User> GetByCompanyId(string id)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public User GetById(string id)
         {
             throw new System.NotImplementedException();

@@ -1,6 +1,6 @@
 namespace MobileSample.Core.Models
 {
-    public class Constructor : BaseEntities
+    public class Manufacturer : BaseEntities
     {
         public string Name { get; set; }
         public string Country { get; set; }
@@ -9,6 +9,7 @@ namespace MobileSample.Core.Models
         {
             return !string.IsNullOrWhiteSpace(Id) &&
                    !string.IsNullOrWhiteSpace(Name) &&
+                   !string.IsNullOrWhiteSpace(CompanyId) &&
                    !string.IsNullOrWhiteSpace(Country);
         }
     }

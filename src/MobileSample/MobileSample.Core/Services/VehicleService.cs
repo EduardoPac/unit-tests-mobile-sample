@@ -10,7 +10,7 @@ namespace MobileSample.Core.Services
     public interface IVehicleService : IBaseService<Vehicle>
     {
         Task<IEnumerable<Vehicle>> GetByIds(string[] ids);
-        Task<IEnumerable<Vehicle>> GetByConstructorId(string id);
+        Task<IEnumerable<Vehicle>> GetByManufacturerId(string id);
         Task<IEnumerable<Vehicle>> GetByVehicleClass(EVehicleClass vehicleClass);
     }
 
@@ -25,6 +25,14 @@ namespace MobileSample.Core.Services
 
         public async Task<IEnumerable<Vehicle>> GetAll() => await Task.Run(_vehicleRepository.GetAll);
 
+        public async Task<IEnumerable<Vehicle>> GetByCompanyId(string id)
+        {
+            if (string.IsNullOrWhiteSpace(id))
+                return null;
+
+            return await Task.Run(() => _vehicleRepository.GetByCompanyId(id));
+        }
+
         public async Task<Vehicle> GetById(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -33,17 +41,17 @@ namespace MobileSample.Core.Services
             return await Task.Run(() => _vehicleRepository.GetById(id));
         }
 
-        public async Task<bool> Import(List<Vehicle> vehicles)
+        public async Task<bool> Import(List<Vehicle> manufacturers)
         {
-            if (vehicles == null || vehicles.Any(vehicle => vehicle.ValidateRequired()))
+            if (manufacturers == null || manufacturers.Any(vehicle => !vehicle.ValidateRequired()))
                 return false;
 
-            return await Task.Run(() => _vehicleRepository.Import(vehicles));
+            return await Task.Run(() => _vehicleRepository.Import(manufacturers));
         }
 
         public async Task<bool> Save(Vehicle vehicle)
         {
-            if (vehicle.ValidateRequired())
+            if (!vehicle.ValidateRequired())
                 return false;
 
             return await Task.Run(() => _vehicleRepository.Save(vehicle));
@@ -66,12 +74,12 @@ namespace MobileSample.Core.Services
             return await Task.Run(() => _vehicleRepository.GetByIds(ids));
         }
 
-        public async Task<IEnumerable<Vehicle>> GetByConstructorId(string id)
+        public async Task<IEnumerable<Vehicle>> GetByManufacturerId(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
                 return null;
 
-            return await Task.Run(() => _vehicleRepository.GetByConstructorId(id));
+            return await Task.Run(() => _vehicleRepository.GetByManufacturerId(id));
         }
 
         public async Task<IEnumerable<Vehicle>> GetByVehicleClass(EVehicleClass vehicleClass) =>
