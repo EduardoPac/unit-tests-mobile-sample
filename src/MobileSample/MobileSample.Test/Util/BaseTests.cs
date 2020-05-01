@@ -1,8 +1,6 @@
-using System;
 using Bogus;
-using MobileSample.Test.Util;
 
-namespace MobileSample.Test
+namespace MobileSample.Test.Util
 {
     public abstract class BaseTests
     {
