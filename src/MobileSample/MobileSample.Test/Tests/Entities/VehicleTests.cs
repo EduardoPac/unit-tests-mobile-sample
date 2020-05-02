@@ -17,6 +17,7 @@ namespace MobileSample.Test.Entities
             var vehicle = EntitiesFactory.GetNewVehicle();
 
             bool result = vehicle.ValidatePropertiesRequired();
+            
             result.Should().BeTrue();
         }
 
@@ -30,6 +31,7 @@ namespace MobileSample.Test.Entities
             var vehicle = EntitiesFactory.GetNewVehicleParametrized(id, name, companyId, manufacturerId);
 
             bool result = vehicle.ValidatePropertiesRequired();
+            
             result.Should().BeFalse();
         }
     }

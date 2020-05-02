@@ -36,6 +36,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.GetAll()).Returns(listReturns);
 
             IEnumerable<Manufacturer> result = await _manufacturerService.GetAll();
+
             result.Should().NotBeNull();
         }
 
@@ -47,6 +48,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.GetByCompanyId(manufactured.CompanyId)).Returns(listReturns);
 
             IEnumerable<Manufacturer> result = await _manufacturerService.GetByCompanyId(manufactured.CompanyId);
+
             result.Should().NotBeNull();
         }
 
@@ -57,6 +59,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.GetById(manufacturer.Id)).Returns(manufacturer);
 
             Manufacturer result = await _manufacturerService.GetById(manufacturer.Id);
+
             result.Should().NotBeNull();
         }
 
@@ -68,6 +71,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.Import(listManufacturers)).Returns(true);
 
             bool result = await _manufacturerService.Import(listManufacturers);
+
             result.Should().BeTrue();
         }
 
@@ -78,6 +82,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.Save(manufactured)).Returns(true);
 
             bool result = await _manufacturerService.Save(manufactured);
+
             result.Should().BeTrue();
         }
 
@@ -88,6 +93,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.Save(manufactured)).Returns(true);
 
             bool result = await _manufacturerService.Remove(manufactured);
+
             result.Should().BeTrue();
         }
 
@@ -104,6 +110,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.GetByCompanyId(id)).Returns(returnList);
 
             IEnumerable<Manufacturer> result = await _manufacturerService.GetByCompanyId(id);
+
             result.Should().BeNull();
         }
 
@@ -115,15 +122,16 @@ namespace MobileSample.Test.Services
             var manufacturer = EntitiesFactory.GetNewManufacturer();
             _manufacturedRepository.Setup(r => r.GetById(id)).Returns(manufacturer);
 
-            Manufacturer result = await _manufacturerService.GetById(id);
+            var result = await _manufacturerService.GetById(id);
+
             result.Should().BeNull();
         }
 
         [Theory]
-        [InlineData(null,"test","test","test")]
-        [InlineData("test",null,"test","test")]
-        [InlineData("test","test",null,"test")]
-        [InlineData("test","test","test",null)]
+        [InlineData(null, "test", "test", "test")]
+        [InlineData("test", null, "test", "test")]
+        [InlineData("test", "test", null, "test")]
+        [InlineData("test", "test", "test", null)]
         public async void ImportInvalid(string id, string companyId, string name, string country)
         {
             var manufacturedInvalid = EntitiesFactory.GetNewManufacturerParameterized(id, companyId, name, country);
@@ -132,20 +140,22 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.Import(manufacturedList)).Returns(true);
 
             bool result = await _manufacturerService.Import(manufacturedList);
+
             result.Should().BeFalse();
         }
 
         [Theory]
-        [InlineData(null,"test","test","test")]
-        [InlineData("test",null,"test","test")]
-        [InlineData("test","test",null,"test")]
-        [InlineData("test","test","test",null)]
+        [InlineData(null, "test", "test", "test")]
+        [InlineData("test", null, "test", "test")]
+        [InlineData("test", "test", null, "test")]
+        [InlineData("test", "test", "test", null)]
         public async void SaveInvalid(string id, string companyId, string name, string country)
         {
             var manufactured = EntitiesFactory.GetNewManufacturerParameterized(id, companyId, name, country);
             _manufacturedRepository.Setup(r => r.Save(manufactured)).Returns(true);
 
             bool result = await _manufacturerService.Save(manufactured);
+
             result.Should().BeFalse();
         }
 
@@ -159,6 +169,7 @@ namespace MobileSample.Test.Services
             _manufacturedRepository.Setup(r => r.Save(manufacturer)).Returns(true);
 
             bool result = await _manufacturerService.Remove(manufacturer);
+
             result.Should().BeFalse();
         }
 

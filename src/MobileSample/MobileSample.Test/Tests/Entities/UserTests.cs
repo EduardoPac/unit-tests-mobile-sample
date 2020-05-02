@@ -20,6 +20,7 @@ namespace MobileSample.Test.Entities
             var user = EntitiesFactory.GetNewUser();
             
             bool result = user.ValidatePropertiesRequired();
+            
             result.Should().BeTrue();
         }
 
@@ -34,6 +35,7 @@ namespace MobileSample.Test.Entities
             var user = EntitiesFactory.GetNewUserParameterized(id, companyId, name, idsVehicles);
             
             bool result = user.ValidatePropertiesRequired();
+            
             result.Should().BeFalse();
         }
     }

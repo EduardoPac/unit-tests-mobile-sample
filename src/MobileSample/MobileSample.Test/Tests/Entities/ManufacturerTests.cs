@@ -15,7 +15,9 @@ namespace MobileSample.Test.Entities
         public void PropertiesRequiredValid()
         {
             var manufacturer = EntitiesFactory.GetNewManufacturer();
+            
             bool result = manufacturer.ValidatePropertiesRequired();
+            
             result.Should().BeTrue();
         }
 
@@ -27,7 +29,9 @@ namespace MobileSample.Test.Entities
         public void PropertiesRequiredInvalid(string id, string companyId, string name, string country)
         {
             var manufacturer = EntitiesFactory.GetNewManufacturerParameterized(id, companyId, name, country);
+            
             bool result = manufacturer.ValidatePropertiesRequired();
+            
             result.Should().BeFalse();
         }
     }
