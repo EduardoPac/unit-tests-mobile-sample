@@ -21,10 +21,6 @@ namespace MobileSample.Test.Entities
         }
 
         [Theory]
-        [InlineData("","test","test","test")]
-        [InlineData("test","","test","test")]
-        [InlineData("test","test","","test")]
-        [InlineData("test","test","test","")]
         [InlineData(null,"test","test","test")]
         [InlineData("test",null,"test","test")]
         [InlineData("test","test",null,"test")]

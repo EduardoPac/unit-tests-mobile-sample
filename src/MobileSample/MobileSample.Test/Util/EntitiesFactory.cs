@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Bogus;
 using BurgerMonkeys.Tools;
 using MobileSample.Core.Enums;
@@ -10,11 +11,13 @@ namespace MobileSample.Test.Util
     {
         readonly Faker _faker;
         readonly string _companyId;
+        readonly int _numItems;
 
-        public EntitiesFactory(Faker faker, string companyId)
+        public EntitiesFactory(Faker faker, string companyId, int numItems)
         {
             _faker = faker;
             _companyId = companyId;
+            _numItems = numItems;
         }
 
 
@@ -40,6 +43,17 @@ namespace MobileSample.Test.Util
             };
         }
 
+        public List<Manufacturer> GetManufacturerList()
+        {
+            var manufacturers = new List<Manufacturer>();
+            for (int i = 0; i < _numItems; i++)
+            {
+                manufacturers.Add(GetNewManufacturer());
+            }
+
+            return manufacturers;
+        }
+
         public User GetNewUser()
         {
             return new User
@@ -56,7 +70,7 @@ namespace MobileSample.Test.Util
         }
 
         public User GetNewUserParameterized(string id, string companyId, string name, string[] vehiclesIds,
-                                            List<Vehicle> vehicles = null)
+            List<Vehicle> vehicles = null)
         {
             return new User
             {
@@ -69,6 +83,17 @@ namespace MobileSample.Test.Util
                 Vehicles = vehicles,
                 VehicleIds = vehiclesIds
             };
+        }
+
+        public List<User> GetUserList()
+        {
+            var users = new List<User>();
+            for (int i = 0; i < _numItems; i++)
+            {
+                users.Add(GetNewUser());
+            }
+
+            return users;
         }
 
         public Vehicle GetNewVehicle()
@@ -95,6 +120,17 @@ namespace MobileSample.Test.Util
                 Manufacturer = null,
                 VehicleClass = GetRandomEVehicleClass(_faker.Random.Int(0, 4))
             };
+        }
+        
+        public List<User> GetVehicleList()
+        {
+            var users = new List<User>();
+            for (int i = 0; i < _numItems; i++)
+            {
+                users.Add(GetNewUser());
+            }
+
+            return users;
         }
 
         static EVehicleClass GetRandomEVehicleClass(int index)

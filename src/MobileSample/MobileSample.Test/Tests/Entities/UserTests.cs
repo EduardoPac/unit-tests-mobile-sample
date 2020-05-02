@@ -24,13 +24,10 @@ namespace MobileSample.Test.Entities
         }
 
         [Theory]
-        [InlineData("","test","test",true)]
-        [InlineData("test","","test",true)]
-        [InlineData("test","test","",true)]
-        [InlineData("test","test","test",false)]
         [InlineData(null,"test","test",true)]
         [InlineData("test",null,"test",true)]
         [InlineData("test","test",null,true)]
+        [InlineData("test","test","test",false)]
         public void EntitiesRequiredInvalid(string id, string companyId, string name, bool hasArrayIdVehicles)
         {
             string[] idsVehicles = hasArrayIdVehicles ? EntitiesFactory.GetArrayStringIds(2) : new string [] { };

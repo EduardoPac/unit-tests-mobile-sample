@@ -6,11 +6,12 @@ namespace MobileSample.Test.Util
     {
         protected readonly EntitiesFactory EntitiesFactory;
         const string CompanyId = "Test";
+        const int NumItems = 10; 
 
         protected BaseTests()
         {
             var faker = new Faker();
-            EntitiesFactory = new EntitiesFactory(faker, CompanyId);
+            EntitiesFactory = new EntitiesFactory(faker, CompanyId, NumItems);
         }
     }
 }
