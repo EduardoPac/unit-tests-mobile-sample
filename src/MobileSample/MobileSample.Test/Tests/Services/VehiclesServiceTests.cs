@@ -1,7 +1,12 @@
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using FluentAssertions;
+using MobileSample.Core.Models;
 using MobileSample.Core.Repositories;
 using MobileSample.Core.Services;
 using MobileSample.Test.Util;
 using Moq;
+using Xunit;
 
 namespace MobileSample.Test.Services
 {
@@ -12,13 +17,13 @@ namespace MobileSample.Test.Services
         void GetByVehicleClassValid();
         void GetByCompanyIdInvalid(string id);
         void GetByIdInvalid(string id);
-        void ImportInvalid(string id, string companyId, string name, string manufacturerId, int numItems);
+        void ImportInvalid(string id, string companyId, string name, string manufacturerId);
         void SaveInvalid(string id, string companyId, string name, string manufacturerId);
         void RemoveInvalid(string id);
-        void GetByIdsInvalid(string[] ids);
+        void GetByIdsInvalid();
         void GetByManufacturerIdInvalid(string id);
     }
-    
+
     public class VehiclesServiceTests : BaseTests, IVehiclesServiceTests
     {
         #region Setup
@@ -27,85 +32,213 @@ namespace MobileSample.Test.Services
         readonly VehicleService _vehicleService = new VehicleService(_vehicleRepository.Object);
 
         #endregion
-        
-        public void GetAllValid()
+
+        #region Valid
+
+        [Fact]
+        public async void GetAllValid()
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> listReturn = EntitiesFactory.GetVehicleList();
+            _vehicleRepository.Setup(r => r.GetAll()).Returns(listReturn);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetAll();
+
+            result.Should().NotBeNull();
         }
 
-        public void GetByCompanyIdValid()
+        [Fact]
+        public async void GetByCompanyIdValid()
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> listReturn = EntitiesFactory.GetVehicleList();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            listReturn.Add(vehicle);
+            _vehicleRepository.Setup(r => r.GetByCompanyId(vehicle.CompanyId)).Returns(listReturn);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetByCompanyId(vehicle.CompanyId);
+
+            result.Should().NotBeNull();
         }
 
-        public void GetByIdValid()
+        [Fact]
+        public async void GetByIdValid()
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            _vehicleRepository.Setup(r => r.GetById(vehicle.Id)).Returns(vehicle);
+
+            var result = await _vehicleService.GetById(vehicle.Id);
+
+            result.Should().NotBeNull();
         }
 
-        public void ImportValid()
+        [Fact]
+        public async void ImportValid()
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> vehicles = EntitiesFactory.GetVehicleList();
+            _vehicleRepository.Setup(r => r.Import(vehicles)).Returns(true);
+
+            bool result = await _vehicleService.Import(vehicles);
+
+            result.Should().BeTrue();
         }
 
-        public void SaveValid()
+        [Fact]
+        public async void SaveValid()
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            _vehicleRepository.Setup(r => r.Save(vehicle)).Returns(true);
+
+            bool result = await _vehicleService.Save(vehicle);
+
+            result.Should().BeTrue();
         }
 
-        public void RemoveValid()
+        [Fact]
+        public async void RemoveValid()
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            _vehicleRepository.Setup(r => r.Save(vehicle)).Returns(true);
+
+            bool result = await _vehicleService.Remove(vehicle);
+
+            result.Should().BeTrue();
         }
 
-        public void GetByIdsValid()
+        [Fact]
+        public async void GetByIdsValid()
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> listReturn = EntitiesFactory.GetVehicleList();
+            string[] ids = EntitiesFactory.GetArrayStringIds();
+            _vehicleRepository.Setup(r => r.GetByIds(ids)).Returns(listReturn);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetByIds(ids);
+
+            result.Should().NotBeNull();
         }
 
-        public void GetByManufacturerIdValid()
+        [Fact]
+        public async void GetByManufacturerIdValid()
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            List<Vehicle> listReturn = EntitiesFactory.GetVehicleList();
+            _vehicleRepository.Setup(r => r.GetByManufacturerId(vehicle.ManufacturerId)).Returns(listReturn);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetByManufacturerId(vehicle.ManufacturerId);
+
+            result.Should().NotBeNull();
         }
 
-        public void GetByVehicleClassValid()
+        [Fact]
+        public async void GetByVehicleClassValid()
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            List<Vehicle> listReturn = EntitiesFactory.GetVehicleList();
+            _vehicleRepository.Setup(r => r.GetByVehicleClass(vehicle.VehicleClass)).Returns(listReturn);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetByVehicleClass(vehicle.VehicleClass);
+
+            result.Should().NotBeNull();
         }
 
-        public void GetByCompanyIdInvalid(string id)
+        #endregion
+
+        #region Invalid
+
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async void GetByCompanyIdInvalid(string id)
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> returnList = EntitiesFactory.GetVehicleList();
+            _vehicleRepository.Setup(r => r.GetByCompanyId(id)).Returns(returnList);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetByCompanyId(id);
+
+            result.Should().BeNull();
         }
 
-        public void GetByIdInvalid(string id)
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async void GetByIdInvalid(string id)
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            _vehicleRepository.Setup(r => r.GetById(id)).Returns(vehicle);
+
+            var result = await _vehicleService.GetById(id);
+
+            result.Should().BeNull();
         }
 
-        public void ImportInvalid(string id, string companyId, string name, string manufacturerId, int numItems)
+        [Theory]
+        [InlineData(null,"test","test","test")]
+        [InlineData("test",null,"test","test")]
+        [InlineData("test","test",null,"test")]
+        [InlineData("test","test","test",null)]
+        public async void ImportInvalid(string id, string companyId, string name, string manufacturerId)
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> vehicleList = EntitiesFactory.GetVehicleList();
+            var vehicle = EntitiesFactory.GetNewVehicleParametrized(id, name, companyId, manufacturerId);
+            vehicleList.Add(vehicle);
+            _vehicleRepository.Setup(r => r.Import(vehicleList)).Returns(true);
+
+            bool result = await _vehicleService.Import(vehicleList);
+
+            result.Should().BeFalse();
         }
 
-        public void SaveInvalid(string id, string companyId, string name, string manufacturerId)
+        [Theory]
+        [InlineData(null,"test","test","test")]
+        [InlineData("test",null,"test","test")]
+        [InlineData("test","test",null,"test")]
+        [InlineData("test","test","test",null)]
+        public async void SaveInvalid(string id, string companyId, string name, string manufacturerId)
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicleParametrized(id, name, companyId, manufacturerId);
+            _vehicleRepository.Setup(r => r.Save(vehicle)).Returns(true);
+
+            bool result = await _vehicleService.Save(vehicle);
+
+            result.Should().BeFalse();
         }
 
-        public void RemoveInvalid(string id)
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async void RemoveInvalid(string id)
         {
-            throw new System.NotImplementedException();
+            var vehicle = EntitiesFactory.GetNewVehicle();
+            vehicle.Id = id;
+            _vehicleRepository.Setup(r => r.Save(vehicle)).Returns(true);
+
+            bool result = await _vehicleService.Remove(vehicle);
+
+            result.Should().BeFalse();
         }
 
-        public void GetByIdsInvalid(string[] ids)
+        [Fact]
+        public async void GetByIdsInvalid()
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> returnList = EntitiesFactory.GetVehicleList();
+            _vehicleRepository.Setup(r => r.GetByIds(null)).Returns(returnList);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetByIds(null);
+
+            result.Should().BeNull();
         }
 
-        public void GetByManufacturerIdInvalid(string id)
+        [Theory]
+        [InlineData("")]
+        [InlineData(null)]
+        public async void GetByManufacturerIdInvalid(string id)
         {
-            throw new System.NotImplementedException();
+            List<Vehicle> returnList = EntitiesFactory.GetVehicleList();
+            _vehicleRepository.Setup(r => r.GetByManufacturerId(id)).Returns(returnList);
+
+            IEnumerable<Vehicle> result = await _vehicleService.GetByManufacturerId(id);
+
+            result.Should().BeNull();
         }
+
+        #endregion
     }
 }

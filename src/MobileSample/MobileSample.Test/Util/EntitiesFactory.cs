@@ -122,15 +122,15 @@ namespace MobileSample.Test.Util
             };
         }
         
-        public List<User> GetVehicleList()
+        public List<Vehicle> GetVehicleList()
         {
-            var users = new List<User>();
+            var vehicles = new List<Vehicle>();
             for (int i = 0; i < _numItems; i++)
             {
-                users.Add(GetNewUser());
+                vehicles.Add(GetNewVehicle());
             }
 
-            return users;
+            return vehicles;
         }
 
         static EVehicleClass GetRandomEVehicleClass(int index)
@@ -162,7 +162,7 @@ namespace MobileSample.Test.Util
             };
         }
 
-        public string[] GetArrayStringIds(int count)
+        public string[] GetArrayStringIds(int count = 2)
         {
             var ids = new List<string>();
             for (int i = 0; i < count; i++)
