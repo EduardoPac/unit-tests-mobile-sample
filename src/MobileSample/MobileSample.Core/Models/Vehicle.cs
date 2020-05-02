@@ -9,7 +9,7 @@ namespace MobileSample.Core.Models
         public Manufacturer Manufacturer { get; set; }
         public EVehicleClass VehicleClass { get; set; }
 
-        public override bool ValidateRequired()
+        public override bool ValidatePropertiesRequired()
         {
             return !string.IsNullOrWhiteSpace(Id) &&
                    !string.IsNullOrWhiteSpace(Name) &&

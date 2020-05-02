@@ -39,7 +39,7 @@ namespace MobileSample.Core.Services
 
         public async Task<bool> Import(List<Manufacturer> manufacturers)
         {
-            if (manufacturers == null || manufacturers.Any(manufacturer => !manufacturer.ValidateRequired()))
+            if (manufacturers == null || manufacturers.Any(manufacturer => !manufacturer.ValidatePropertiesRequired()))
                 return false;
 
             return await Task.Run(() => _manufacturerRepository.Import(manufacturers));
@@ -47,7 +47,7 @@ namespace MobileSample.Core.Services
 
         public async Task<bool> Save(Manufacturer manufacturer)
         {
-            if (!manufacturer.ValidateRequired())
+            if (!manufacturer.ValidatePropertiesRequired())
                 return false;
 
             return await Task.Run(() => _manufacturerRepository.Save(manufacturer));

@@ -41,7 +41,7 @@ namespace MobileSample.Core.Services
 
         public async Task<bool> Import(List<User> manufacturers)
         {
-            if (manufacturers == null || manufacturers.Any(user => !user.ValidateRequired()))
+            if (manufacturers == null || manufacturers.Any(user => !user.ValidatePropertiesRequired()))
                 return false;
 
             return await Task.Run(() => _userRepository.Import(manufacturers));
@@ -49,7 +49,7 @@ namespace MobileSample.Core.Services
 
         public async Task<bool> Save(User user)
         {
-            if (!user.ValidateRequired())
+            if (!user.ValidatePropertiesRequired())
                 return false;
 
             return await Task.Run(() => _userRepository.Save(user));

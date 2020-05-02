@@ -2,6 +2,6 @@ namespace MobileSample.Test.Util
 {
     public interface IBaseEntitiesTests
     {
-        public void EntitiesRequiredValid();
+        public void PropertiesRequiredValid();
     }
 }

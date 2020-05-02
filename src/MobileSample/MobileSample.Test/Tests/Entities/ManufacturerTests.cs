@@ -6,16 +6,16 @@ namespace MobileSample.Test.Entities
 {
     internal interface IManufacturerTests : IBaseEntitiesTests
     {
-        void EntitiesRequiredInvalid(string id, string companyId, string name, string country);
+        void PropertiesRequiredInvalid(string id, string companyId, string name, string country);
     }
     
     public class ManufacturerTests : BaseTests, IManufacturerTests
     {
         [Fact]
-        public void EntitiesRequiredValid()
+        public void PropertiesRequiredValid()
         {
             var manufacturer = EntitiesFactory.GetNewManufacturer();
-            bool result = manufacturer.ValidateRequired();
+            bool result = manufacturer.ValidatePropertiesRequired();
             result.Should().BeTrue();
         }
 
@@ -24,10 +24,10 @@ namespace MobileSample.Test.Entities
         [InlineData("test",null,"test","test")]
         [InlineData("test","test",null,"test")]
         [InlineData("test","test","test",null)]
-        public void EntitiesRequiredInvalid(string id, string companyId, string name, string country)
+        public void PropertiesRequiredInvalid(string id, string companyId, string name, string country)
         {
             var manufacturer = EntitiesFactory.GetNewManufacturerParameterized(id, companyId, name, country);
-            bool result = manufacturer.ValidateRequired();
+            bool result = manufacturer.ValidatePropertiesRequired();
             result.Should().BeFalse();
         }
     }

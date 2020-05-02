@@ -1,9 +1,13 @@
+using MobileSample.Core.Repositories;
+using MobileSample.Core.Services;
 using MobileSample.Test.Util;
+using Moq;
 
 namespace MobileSample.Test.Services
 {
     internal interface IUserServiceTests : IBaseServiceTests
     {
+        void GetByConductorClassValid();
         void GetByCompanyIdInvalid(string id);
         void GetByIdInvalid(string id);
         void ImportInvalid(string id, string companyId, string name, bool hasArrayIdVehicles, int numberItems);
@@ -13,6 +17,13 @@ namespace MobileSample.Test.Services
 
     public class UserServiceTests : BaseTests, IUserServiceTests
     {
+        #region Setup
+
+        static readonly Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
+        readonly UserService _userService = new UserService(_userRepository.Object);
+
+        #endregion
+        
         public void GetAllValid()
         {
             throw new System.NotImplementedException();
@@ -39,6 +50,11 @@ namespace MobileSample.Test.Services
         }
 
         public void RemoveValid()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void GetByConductorClassValid()
         {
             throw new System.NotImplementedException();
         }

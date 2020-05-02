@@ -14,7 +14,7 @@ namespace MobileSample.Core.Models
         public List<Vehicle> Vehicles { get; set; }
 
 
-        public override bool ValidateRequired()
+        public override bool ValidatePropertiesRequired()
         {
             return !string.IsNullOrWhiteSpace(Id) &&
                    !string.IsNullOrWhiteSpace(Name) &&

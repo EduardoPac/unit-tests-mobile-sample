@@ -5,6 +5,6 @@ namespace MobileSample.Core.Models
         public string Id { get; set; }
         public string CompanyId { get; set; }
         public bool Removed { get; set; }
-        public abstract bool ValidateRequired();
+        public abstract bool ValidatePropertiesRequired();
     }
 }

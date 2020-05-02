@@ -5,7 +5,7 @@ namespace MobileSample.Core.Models
         public string Name { get; set; }
         public string Country { get; set; }
 
-        public override bool ValidateRequired()
+        public override bool ValidatePropertiesRequired()
         {
             return !string.IsNullOrWhiteSpace(Id) &&
                    !string.IsNullOrWhiteSpace(Name) &&

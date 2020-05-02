@@ -9,17 +9,17 @@ namespace MobileSample.Test.Entities
 {
     internal interface IUserTests : IBaseEntitiesTests
     {
-        void EntitiesRequiredInvalid(string id, string companyId, string name, bool hasArrayIdVehicles);
+        void PropertiesRequiredInvalid(string id, string companyId, string name, bool hasArrayIdVehicles);
     }
     
     public class UserTests : BaseTests, IUserTests
     {
         [Fact]
-        public void EntitiesRequiredValid()
+        public void PropertiesRequiredValid()
         {
             var user = EntitiesFactory.GetNewUser();
             
-            bool result = user.ValidateRequired();
+            bool result = user.ValidatePropertiesRequired();
             result.Should().BeTrue();
         }
 
@@ -28,12 +28,12 @@ namespace MobileSample.Test.Entities
         [InlineData("test",null,"test",true)]
         [InlineData("test","test",null,true)]
         [InlineData("test","test","test",false)]
-        public void EntitiesRequiredInvalid(string id, string companyId, string name, bool hasArrayIdVehicles)
+        public void PropertiesRequiredInvalid(string id, string companyId, string name, bool hasArrayIdVehicles)
         {
             string[] idsVehicles = hasArrayIdVehicles ? EntitiesFactory.GetArrayStringIds(2) : new string [] { };
             var user = EntitiesFactory.GetNewUserParameterized(id, companyId, name, idsVehicles);
             
-            bool result = user.ValidateRequired();
+            bool result = user.ValidatePropertiesRequired();
             result.Should().BeFalse();
         }
     }
