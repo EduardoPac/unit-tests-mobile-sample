@@ -11,7 +11,7 @@ The sera from the guidelines were divided into:
 - Test class structure
 - Test method structure
 
-## Packages used for testing
+#Packages used for testing
 
 Pacotes utilizados no projeto de tests
 
@@ -24,7 +24,7 @@ Moq|[4.14.1](https://www.nuget.org/packages/Moq/) | Mocking Framework for .Net
 FluentAssertions|[5.10.3](https://www.nuget.org/packages/FluentAssertions/)| The assertions look beautiful, natural and, most importantly, extremely readable
 
 
-## Good test creation practices
+#Good test creation practices
 
 Unit tests should be simple to write and rewrite when necessary; in that case, always use the **KISS** principle (keep it simple, stupid). If the test is getting too big to be mounted on the Arrange, the method being tested is very complex and needs to be refactored.
 
@@ -37,7 +37,7 @@ A unit test should simulate the method being tested in two ways.
 - **The invalid test** - It is necessary to simulate possible errors in the code flow, such as mandatory parameters that are not as they should be and possible returns, if this occurs.
 
 
-## Structure of the test project
+#Structure of the test project
 
 For the unit tests proposed in this guideline, we will structure our test project in two folders **Tests** and **Util**.
 - Tests: Project tests will be grouped.
@@ -47,14 +47,14 @@ In tests we have the separation of two test areas:
 - Services: We will create the tests for the service class methods.
 - Entities: We will create the entity tests, such as validation of mandatory properties.
 
-###Tests
+##Tests
 
-####Services
+##Services
 
 The proposed structure for mobile applications at its core is the pattern **Service/Repository**. In MVVM projects the **ViewModel** layer will communicate with the services to get and save the data.
 In services we will do all the treatment of the objects coming from the VM and thus communicate with the API or even with the **Repository** that will make Crud with the chosen database.
 
-####Entities
+##Entities
 
 In the proposed structure, we are no longer responsible for the entity, validating the data being tested. With the **ValidatePropertiesRequired** method.
 
@@ -67,7 +67,7 @@ public bool ValidatePropertiesRequired()
            !string.IsNullOrWhiteSpace(Country);
 }
 `````
-###Util
+##Util
 
 In the Util folder of the project we have the following classes and interfaces created:
 - BaseTests - Where we configure the properties used in all tests
@@ -75,7 +75,7 @@ In the Util folder of the project we have the following classes and interfaces c
 - IBaseEntitiesTests - Interface used for entity testing
 - IBaseServiceTests - Insterface used for testing services
 
-####BaseTests
+##BaseTests
 In this class we started the **EntitiesFactory** used in the tests and specifications, some properties that we will use to generate the entities.
 
 ````
@@ -93,7 +93,7 @@ public abstract class BaseTests
 }
 ````
 
-####EntitiesFactory
+##EntitiesFactory
 In this class we create the methods to create a test object. For this guideline we will separate in 3 methods for each entity.
 - Get[Entity]
 - Ger[Entity]Parameterized
@@ -145,7 +145,7 @@ In this method to generate random data we use two packages:
 - Bogus - When creating the **Faker** object, we can generate numerous types of data. More information [here](https://github.com/bchavez/Bogus)
 - BurgerMonkeys.Tools - We use a library method to generate dynamic string Ids. More information [here](https://github.com/BurgerMonkeys/burgermonkeystools)
 
-####Interfaces
+##Interfaces
 Both interfaces will be used later in the tests. The methods on these interfaces are used regardless of which entity will be tested.
 **IBaseEntitiesTests**
 ````
@@ -167,14 +167,14 @@ public interface IBaseServiceTests
 }
 ````
 
-## Nomenclature standards
+#Nomenclature standards
 
 
 
-## Test class structure
+#Test class structure
 
 
 
-## Test method structure
+#Test method structure
 
 
