@@ -1,4 +1,4 @@
-# Unit test framework guidelines to mobile projects
+# Unit test guidelines to mobile projects
 
 The use of unit tests is a necessary practice for our codes to ensure that the expected behavior of each component of the system is performed correctly. In the mobile world, the importance of this practice becomes **inevitable**, as we are talking about several devices with different configurations. After testing a code, we can predict errors before we even release a new version of the application.
 
