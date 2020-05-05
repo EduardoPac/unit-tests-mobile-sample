@@ -1,12 +1,10 @@
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using FluentAssertions;
 using MobileSample.Core.Models;
 using MobileSample.Core.Repositories;
 using MobileSample.Core.Services;
 using MobileSample.Test.Util;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace MobileSample.Test.Services
@@ -25,8 +23,8 @@ namespace MobileSample.Test.Services
     {
         #region Setup
 
-        static readonly Mock<IUserRepository> _userRepository = new Mock<IUserRepository>();
-        readonly UserService _userService = new UserService(_userRepository.Object);
+        static readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
+        readonly UserService _userService = new UserService(_userRepository);
 
         #endregion
 
@@ -36,7 +34,7 @@ namespace MobileSample.Test.Services
         public async void GetAllValid()
         {
             var listReturns = new List<User> {EntitiesFactory.GetNewUser()};
-            _userRepository.Setup(r => r.GetAll()).Returns(listReturns);
+            _userRepository.GetAll().Returns(listReturns);
 
             IEnumerable<User> result = await _userService.GetAll();
             
@@ -48,7 +46,7 @@ namespace MobileSample.Test.Services
         {
             var user = EntitiesFactory.GetNewUser();
             var listReturns = new List<User> {user};
-            _userRepository.Setup(r => r.GetByCompanyId(user.CompanyId)).Returns(listReturns);
+            _userRepository.GetByCompanyId(user.CompanyId).Returns(listReturns);
 
             IEnumerable<User> result = await _userService.GetByCompanyId(user.CompanyId);
             
@@ -59,7 +57,7 @@ namespace MobileSample.Test.Services
         public async void GetByIdValid()
         {
             var user = EntitiesFactory.GetNewUser();
-            _userRepository.Setup(r => r.GetById(user.Id)).Returns(user);
+            _userRepository.GetById(user.Id).Returns(user);
 
             var result = await _userService.GetById(user.Id);
             
@@ -70,7 +68,7 @@ namespace MobileSample.Test.Services
         public async void ImportValid()
         {
             List<User> users = EntitiesFactory.GetUserList();
-            _userRepository.Setup(r => r.Import(users)).Returns(true);
+            _userRepository.Import(users).Returns(true);
 
             bool result = await _userService.Import(users);
             
@@ -81,7 +79,7 @@ namespace MobileSample.Test.Services
         public async void SaveValid()
         {
             var user = EntitiesFactory.GetNewUser();
-            _userRepository.Setup(r => r.Save(user)).Returns(true);
+            _userRepository.Save(user).Returns(true);
 
             bool result = await _userService.Save(user);
             
@@ -92,7 +90,7 @@ namespace MobileSample.Test.Services
         public async void RemoveValid()
         {
             var user = EntitiesFactory.GetNewUser();
-            _userRepository.Setup(r => r.Save(user)).Returns(true);
+            _userRepository.Save(user).Returns(true);
 
             bool result = await _userService.Remove(user);
             
@@ -105,7 +103,7 @@ namespace MobileSample.Test.Services
             List<User> listReturn = EntitiesFactory.GetUserList();
             var user = EntitiesFactory.GetNewUser();
             listReturn.Add(user);
-            _userRepository.Setup(r => r.GetByConductorClass(user.ConductorClass)).Returns(listReturn);
+            _userRepository.GetByConductorClass(user.ConductorClass).Returns(listReturn);
 
             IEnumerable<User> result = await _userService.GetByConductorClass(user.ConductorClass);
             
@@ -122,7 +120,7 @@ namespace MobileSample.Test.Services
         public async void GetByCompanyIdInvalid(string id)
         {
             List<User> userList = EntitiesFactory.GetUserList();
-            _userRepository.Setup(r => r.GetByCompanyId(id)).Returns(userList);
+            _userRepository.GetByCompanyId(id).Returns(userList);
 
             IEnumerable<User> result = await _userService.GetByCompanyId(id);
 
@@ -135,7 +133,7 @@ namespace MobileSample.Test.Services
         public async void GetByIdInvalid(string id)
         {
             var user = EntitiesFactory.GetNewUser();
-            _userRepository.Setup(r => r.GetById(id)).Returns(user);
+            _userRepository.GetById(id).Returns(user);
 
             var result = await _userService.GetById(id);
 
@@ -153,7 +151,7 @@ namespace MobileSample.Test.Services
             List<User> userList = EntitiesFactory.GetUserList();
             var user = EntitiesFactory.GetNewUserParameterized(id, companyId, name, idsVehicles);
             userList.Add(user);
-            _userRepository.Setup(r => r.Import(userList)).Returns(true);
+            _userRepository.Import(userList).Returns(true);
 
             bool result = await _userService.Import(userList);
             
@@ -169,7 +167,7 @@ namespace MobileSample.Test.Services
         {
             string[] idsVehicles = hasArrayIdVehicles ? EntitiesFactory.GetArrayStringIds(2) : new string [] { };
             var user = EntitiesFactory.GetNewUserParameterized(id, companyId, name, idsVehicles);
-            _userRepository.Setup(r => r.Save(user)).Returns(true);
+            _userRepository.Save(user).Returns(true);
             
             bool result = await _userService.Save(user);
             
@@ -183,7 +181,7 @@ namespace MobileSample.Test.Services
         {
             var user = EntitiesFactory.GetNewUser();
             user.Id = id;
-            _userRepository.Setup(r => r.Save(user)).Returns(true);
+            _userRepository.Save(user).Returns(true);
 
             bool result = await _userService.Remove(user);
 

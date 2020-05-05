@@ -4,7 +4,7 @@ using MobileSample.Core.Models;
 using MobileSample.Core.Repositories;
 using MobileSample.Core.Services;
 using MobileSample.Test.Util;
-using Moq;
+using NSubstitute;
 using Xunit;
 
 namespace MobileSample.Test.Services
@@ -22,8 +22,8 @@ namespace MobileSample.Test.Services
     {
         #region Setup
 
-        static readonly Mock<IManufacturerRepository> _manufacturedRepository = new Mock<IManufacturerRepository>();
-        readonly ManufacturerService _manufacturerService = new ManufacturerService(_manufacturedRepository.Object);
+        static readonly IManufacturerRepository _manufacturedRepository = Substitute.For<IManufacturerRepository>();
+        readonly ManufacturerService _manufacturerService = new ManufacturerService(_manufacturedRepository);
 
         #endregion
 
@@ -33,7 +33,7 @@ namespace MobileSample.Test.Services
         public async void GetAllValid()
         {
             var listReturns = new List<Manufacturer> {EntitiesFactory.GetNewManufacturer()};
-            _manufacturedRepository.Setup(r => r.GetAll()).Returns(listReturns);
+            _manufacturedRepository.GetAll().Returns(listReturns);
 
             IEnumerable<Manufacturer> result = await _manufacturerService.GetAll();
 
@@ -45,7 +45,7 @@ namespace MobileSample.Test.Services
         {
             var manufactured = EntitiesFactory.GetNewManufacturer();
             var listReturns = new List<Manufacturer> {manufactured};
-            _manufacturedRepository.Setup(r => r.GetByCompanyId(manufactured.CompanyId)).Returns(listReturns);
+            _manufacturedRepository.GetByCompanyId(manufactured.CompanyId).Returns(listReturns);
 
             IEnumerable<Manufacturer> result = await _manufacturerService.GetByCompanyId(manufactured.CompanyId);
 
@@ -56,7 +56,7 @@ namespace MobileSample.Test.Services
         public async void GetByIdValid()
         {
             var manufacturer = EntitiesFactory.GetNewManufacturer();
-            _manufacturedRepository.Setup(r => r.GetById(manufacturer.Id)).Returns(manufacturer);
+            _manufacturedRepository.GetById(manufacturer.Id).Returns(manufacturer);
 
             Manufacturer result = await _manufacturerService.GetById(manufacturer.Id);
 
@@ -68,7 +68,7 @@ namespace MobileSample.Test.Services
         {
             var manufactured = EntitiesFactory.GetNewManufacturer();
             var listManufacturers = new List<Manufacturer> {manufactured};
-            _manufacturedRepository.Setup(r => r.Import(listManufacturers)).Returns(true);
+            _manufacturedRepository.Import(listManufacturers).Returns(true);
 
             bool result = await _manufacturerService.Import(listManufacturers);
 
@@ -79,7 +79,7 @@ namespace MobileSample.Test.Services
         public async void SaveValid()
         {
             var manufactured = EntitiesFactory.GetNewManufacturer();
-            _manufacturedRepository.Setup(r => r.Save(manufactured)).Returns(true);
+            _manufacturedRepository.Save(manufactured).Returns(true);
 
             bool result = await _manufacturerService.Save(manufactured);
 
@@ -90,7 +90,7 @@ namespace MobileSample.Test.Services
         public async void RemoveValid()
         {
             var manufactured = EntitiesFactory.GetNewManufacturer();
-            _manufacturedRepository.Setup(r => r.Save(manufactured)).Returns(true);
+            _manufacturedRepository.Save(manufactured).Returns(true);
 
             bool result = await _manufacturerService.Remove(manufactured);
 
@@ -107,7 +107,7 @@ namespace MobileSample.Test.Services
         public async void GetByCompanyIdInvalid(string id)
         {
             List<Manufacturer> returnList = EntitiesFactory.GetManufacturerList();
-            _manufacturedRepository.Setup(r => r.GetByCompanyId(id)).Returns(returnList);
+            _manufacturedRepository.GetByCompanyId(id).Returns(returnList);
 
             IEnumerable<Manufacturer> result = await _manufacturerService.GetByCompanyId(id);
 
@@ -120,7 +120,7 @@ namespace MobileSample.Test.Services
         public async void GetByIdInvalid(string id)
         {
             var manufacturer = EntitiesFactory.GetNewManufacturer();
-            _manufacturedRepository.Setup(r => r.GetById(id)).Returns(manufacturer);
+            _manufacturedRepository.GetById(id).Returns(manufacturer);
 
             var result = await _manufacturerService.GetById(id);
 
@@ -137,7 +137,7 @@ namespace MobileSample.Test.Services
             var manufacturedInvalid = EntitiesFactory.GetNewManufacturerParameterized(id, companyId, name, country);
             List<Manufacturer> manufacturedList = EntitiesFactory.GetManufacturerList();
             manufacturedList.Add(manufacturedInvalid);
-            _manufacturedRepository.Setup(r => r.Import(manufacturedList)).Returns(true);
+            _manufacturedRepository.Import(manufacturedList).Returns(true);
 
             bool result = await _manufacturerService.Import(manufacturedList);
 
@@ -152,7 +152,7 @@ namespace MobileSample.Test.Services
         public async void SaveInvalid(string id, string companyId, string name, string country)
         {
             var manufactured = EntitiesFactory.GetNewManufacturerParameterized(id, companyId, name, country);
-            _manufacturedRepository.Setup(r => r.Save(manufactured)).Returns(true);
+            _manufacturedRepository.Save(manufactured).Returns(true);
 
             bool result = await _manufacturerService.Save(manufactured);
 
@@ -166,7 +166,7 @@ namespace MobileSample.Test.Services
         {
             var manufacturer = EntitiesFactory.GetNewManufacturer();
             manufacturer.Id = id;
-            _manufacturedRepository.Setup(r => r.Save(manufacturer)).Returns(true);
+            _manufacturedRepository.Save(manufacturer).Returns(true);
 
             bool result = await _manufacturerService.Remove(manufacturer);
 

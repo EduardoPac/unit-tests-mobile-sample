@@ -20,7 +20,7 @@ Packages | Version | Description
 xUnit| [2.4.1](https://www.nuget.org/packages/xunit/) | .Net testing framework
 Bogus|[29.0.2](https://www.nuget.org/packages/Bogus/)| Fake object generator to papulate entity data
 BurgerMonkeys.Tools| [1.1.0](https://www.nuget.org/packages/BurgerMonkeys.Tools/) | Gerador de Ids string
-Moq|[4.14.1](https://www.nuget.org/packages/Moq/) | Mocking Framework for .Net
+NSubstitute|[4.2.1](https://www.nuget.org/packages/NSubstitute/) | NSubstitute is a friendly substitute for .NET mocking libraries.
 FluentAssertions|[5.10.3](https://www.nuget.org/packages/FluentAssertions/)| The assertions look beautiful, natural and, most importantly, extremely readable
 
 
@@ -173,6 +173,10 @@ public interface IBaseServiceTests
 
 ## Nomenclature standards ##
 
+Para padronizar nossos testes temos que padronizar as nomenclaturas das classes, metodos e variaveis. Com isso podemos entender melhor o que cada teste esta fazendo e a leitura dos testes sera bem mais limpa.
+
+Prefix | Name | Sufix | Type
+-|:-:|:-:|-
 
 
 ## Test class structure ##
