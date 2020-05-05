@@ -173,14 +173,95 @@ public interface IBaseServiceTests
 
 ## Nomenclature standards ##
 
-Para padronizar nossos testes temos que padronizar as nomenclaturas das classes, metodos e variaveis. Com isso podemos entender melhor o que cada teste esta fazendo e a leitura dos testes sera bem mais limpa.
+To standardize our tests we have to standardize class nomenclatures, methods and variables. With this we can better understand what each test is doing and the reading of the tests will be much cleaner.
 
-Prefix | Name | Sufix | Type
--|:-:|:-:|-
+###Name of Classes and Interfaces###
+
+Prefix | Name | Sufix | Type | Exemple
+-|:-:|:-:|:-:|-
+none| Entity or Service Name | Tests | Classe | UserServiceTests
+I | Entity or Service Name | Tests | Interface | IUserServiceTests
+
+###Method names in test classes###
+
+Prefix | Name | Sufix | Test Type | Exemple
+-|:-:|:-:|:-:|-
+none | Method Name | Valid | Fact | GetByIdValid()
+none | Method Name | Invalid | Theory | GetByIdInvalid(string id)
+
+##Variable names in test classes###
+Prefix | Name | Sufix | Type | Exemple
+-|:-:|:-:|:-:|-
+_ | service name | none | readonly | _userService
+_ | repository name | none | static readonly | _userRepository
+none | expected | none | expected type of method return, used in theory | GetByIdInvalid(string id, User expected)
+none | result | none | return type of the tested method, used later in the assert | var result = _userService.GetById(id)
 
 
 ## Test class structure ##
 
+In the tests class we will divide it in some areas to be more standardized and to be easy to understand:
+- Test class interface
+- Setup
+- Tests Valids
+- Tests Invalids
+
+###Test class interface###
+This interface will be used in the test class, in it we will write the tests that will be done. Previously we created interfaces for services and entities, we will use here in the interface inheriting these created methods, which are always executed.
+Example.
+````
+internal interface IUserServiceTests : IBaseServiceTests
+{
+    void GetByConductorClassValid();
+    void GetByCompanyIdInvalid(string id);
+    void GetByIdInvalid(string id);
+    void ImportInvalid(string id, string companyId, string name, bool hasArrayIdVehicles);
+    void SaveInvalid(string id, string companyId, string name, bool hasArrayIdVehicles);
+    void RemoveInvalid(string id);
+}
+````
+
+###Setup###
+In this area we will start if the services are tested, the mocked repository using the NSubstitute framework (More information [here](https://nsubstitute.github.io/help/getting-started/)) and the service that we will test.
+Example.
+````
+static readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
+readonly UserService _userService = new UserService(_userRepository);
+````
+
+###Tests Valids###
+At first we will test the valid methods, how the method itself should behave.
+Example.
+````
+[Fact]
+public async void GetByIdValid()
+{
+    var user = EntitiesFactory.GetNewUser();
+    _userRepository.GetById(user.Id).Returns(user);
+
+    var result = await _userService.GetById(user.Id);
+    
+    result.Should().NotBeNull();
+}
+````
+
+###Tests Invalids###
+Finally we will test the methods so that we raise the possible ways of the method not returning what we expect, at that moment we will use theories to create a test case on all possible edges in the method.
+Example.
+````
+[Theory]
+[InlineData("")]
+[InlineData(null)]
+public async void GetByIdInvalid(string id)
+{
+    var user = EntitiesFactory.GetNewUser();
+    _userRepository.GetById(id).Returns(user);
+
+    var result = await _userService.GetById(id);
+
+    result.Should().BeNull();
+}
+````
 
 
 ## Test method structure ##
