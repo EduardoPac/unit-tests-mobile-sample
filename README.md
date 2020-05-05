@@ -175,23 +175,23 @@ public interface IBaseServiceTests
 
 To standardize our tests we have to standardize class nomenclatures, methods and variables. With this we can better understand what each test is doing and the reading of the tests will be much cleaner.
 
-###Name of Classes and Interfaces###
+### Name of Classes and Interfaces ###
 
 Prefix | Name | Sufix | Type | Exemple
 -|:-:|:-:|:-:|-
 none| Entity or Service Name | Tests | Classe | UserServiceTests
 I | Entity or Service Name | Tests | Interface | IUserServiceTests
 
-###Method names in test classes###
+### Method names in test classes ###
 
 Prefix | Name | Sufix | Test Type | Exemple
 -|:-:|:-:|:-:|-
 none | Method Name | Valid | Fact | GetByIdValid()
 none | Method Name | Invalid | Theory | GetByIdInvalid(string id)
 
-##Variable names in test classes###
+### Variable names in test classes ###
 Prefix | Name | Sufix | Type | Exemple
--|:-:|:-:|:-:|-
+-|:-:|:-:|-|-
 _ | service name | none | readonly | _userService
 _ | repository name | none | static readonly | _userRepository
 none | expected | none | expected type of method return, used in theory | GetByIdInvalid(string id, User expected)
@@ -206,8 +206,9 @@ In the tests class we will divide it in some areas to be more standardized and t
 - Tests Valids
 - Tests Invalids
 
-###Test class interface###
+### Test class interface ###
 This interface will be used in the test class, in it we will write the tests that will be done. Previously we created interfaces for services and entities, we will use here in the interface inheriting these created methods, which are always executed.
+
 Example.
 ````
 internal interface IUserServiceTests : IBaseServiceTests
@@ -221,16 +222,18 @@ internal interface IUserServiceTests : IBaseServiceTests
 }
 ````
 
-###Setup###
+### Setup ###
 In this area we will start if the services are tested, the mocked repository using the NSubstitute framework (More information [here](https://nsubstitute.github.io/help/getting-started/)) and the service that we will test.
+
 Example.
 ````
 static readonly IUserRepository _userRepository = Substitute.For<IUserRepository>();
 readonly UserService _userService = new UserService(_userRepository);
 ````
 
-###Tests Valids###
+### Tests Valids ###
 At first we will test the valid methods, how the method itself should behave.
+
 Example.
 ````
 [Fact]
@@ -245,8 +248,9 @@ public async void GetByIdValid()
 }
 ````
 
-###Tests Invalids###
+### Tests Invalids ###
 Finally we will test the methods so that we raise the possible ways of the method not returning what we expect, at that moment we will use theories to create a test case on all possible edges in the method.
+
 Example.
 ````
 [Theory]
