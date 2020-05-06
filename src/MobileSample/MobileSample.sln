@@ -1,0 +1,23 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileSample.Test", "MobileSample.Test\MobileSample.Test.csproj", "{5A95FD98-C1FE-430E-A453-721DBB040680}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MobileSample.Core", "MobileSample.Core\MobileSample.Core.csproj", "{F9B445EB-561D-4F78-A9BF-62D31B1A7EAC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5A95FD98-C1FE-430E-A453-721DBB040680}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A95FD98-C1FE-430E-A453-721DBB040680}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A95FD98-C1FE-430E-A453-721DBB040680}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A95FD98-C1FE-430E-A453-721DBB040680}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9B445EB-561D-4F78-A9BF-62D31B1A7EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9B445EB-561D-4F78-A9BF-62D31B1A7EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9B445EB-561D-4F78-A9BF-62D31B1A7EAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9B445EB-561D-4F78-A9BF-62D31B1A7EAC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
