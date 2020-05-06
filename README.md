@@ -19,7 +19,7 @@ Packages | Version | Description
 :-|:-:|:-
 xUnit| [2.4.1](https://www.nuget.org/packages/xunit/) | .Net testing framework
 Bogus|[29.0.2](https://www.nuget.org/packages/Bogus/)| Fake object generator to papulate entity data
-BurgerMonkeys.Tools| [1.1.0](https://www.nuget.org/packages/BurgerMonkeys.Tools/) | Gerador de Ids string
+BurgerMonkeys.Tools| [1.1.0](https://www.nuget.org/packages/BurgerMonkeys.Tools/) | Ids string generator
 NSubstitute|[4.2.1](https://www.nuget.org/packages/NSubstitute/) | NSubstitute is a friendly substitute for .NET mocking libraries.
 FluentAssertions|[5.10.3](https://www.nuget.org/packages/FluentAssertions/)| The assertions look beautiful, natural and, most importantly, extremely readable
 
