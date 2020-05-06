@@ -4,12 +4,12 @@ The use of unit tests is a necessary practice for our codes to ensure that the e
 
 The sera from the guidelines were divided into:
 
-- Packages used for testing 
-- Good test creation practices
-- Structure of the test project
-- Nomenclature standards
-- Test class structure
-- Test method structure
+- [Packages used for testing]()
+- [Good test creation practices]()
+- [Structure of the test project]()
+- [Nomenclature standards]()
+- [Test class structure]()
+- [Test method structure]()
 
 ## Packages used for testing ##
 
@@ -270,4 +270,48 @@ public async void GetByIdInvalid(string id)
 
 ## Test method structure ##
 
+In the test methods, we will use the AAA standard (Arrange, Act, Assert) to make it structured and readability
+
+### Arrange ###
+
+Every test goes through a preparation, be it environment, variables, database, etc. In the first stage of the method, we will prepare the ground for the test. For this, we will use the EntitiesFactory to create our variables and the mock repository to prepare the return of the database.
+
+````
+var user = EntitiesFactory.GetNewUser();
+_userRepository.GetById(id).Returns(user);
+````
+
+### Act ###
+So, every test goes through a time when they stimulate the system that is being tested. This is the Act, where we will call the method that will be tested.
+
+````
+var result = await _userService.GetById(id);
+````
+
+### Assert ###
+
+Finally, check that the results obtained correspond to the expected results. This is Assert, so that this verification is more readable, we use the FluentAssertions package (more information [here](https://fluentassertions.com/introduction)), which makes the verification of the result of the method we are testing much more readable.
+
+````
+result.Should().BeNull();
+````
+
+### Example ###
+To demonstrate each step, I put a comment, but it is not necessary to write the steps.
+
+````
+[Theory]
+[InlineData("")]
+[InlineData(null)]
+public async void GetByIdInvalid(string id)
+{
+    //Arrange
+    var user = EntitiesFactory.GetNewUser();
+    _userRepository.GetById(id).Returns(user);
+    //Act
+    var result = await _userService.GetById(id);
+    //Assert
+    result.Should().BeNull();
+}
+````
 
