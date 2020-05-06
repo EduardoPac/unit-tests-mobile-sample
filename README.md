@@ -4,12 +4,12 @@ The use of unit tests is a necessary practice for our codes to ensure that the e
 
 The sera from the guidelines were divided into:
 
-- [Packages used for testing]()
-- [Good test creation practices]()
-- [Structure of the test project]()
-- [Nomenclature standards]()
-- [Test class structure]()
-- [Test method structure]()
+- [Packages used for testing](#packages-used-for-testing)
+- [Good test creation practices](#good-test-creation-practices)
+- [Structure of the test project](#structure-of-the-test-project)
+- [Nomenclature standards](#nomenclature-standards)
+- [Test class structure](#test-class-structure)
+- [Test method structure](#test-method-structure)
 
 ## Packages used for testing ##
 
