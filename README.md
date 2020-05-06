@@ -2,7 +2,7 @@
 
 The use of unit tests is a necessary practice for our codes to ensure that the expected behavior of each component of the system is performed correctly. In the mobile world, the importance of this practice becomes **inevitable**, as we are talking about several devices with different configurations. After testing a code, we can predict errors before we even release a new version of the application.
 
-The sera from the guidelines were divided into:
+The guidelines were divided into:
 
 - [Packages used for testing](#packages-used-for-testing)
 - [Good test creation practices](#good-test-creation-practices)
@@ -13,7 +13,7 @@ The sera from the guidelines were divided into:
 
 ## Packages used for testing ##
 
-Pacotes utilizados no projeto de tests
+Packages used in the test project.
 
 Packages | Version | Description
 :-|:-:|:-
