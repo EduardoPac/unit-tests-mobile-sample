@@ -17,13 +17,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Go to project base
-      run: cd src/MobileSample/
     - name: Install dependencies
-      run: dotnet restore
+      run: ../src/MobileSample/dotnet restore
     - name: Clean
-      run: dotnet clean
+      run: ../src/MobileSample/dotnet clean
     - name: Build
-      run: dotnet build --configuration Release --no-restore
+      run: ../src/MobileSample/dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: ../src/MobileSample/dotnet test --no-restore --verbosity normal
