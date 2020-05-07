@@ -11,17 +11,18 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    steps:
+    steps: 
     - uses: actions/checkout@v2
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.101
-    - name: Go to project base
-      run: cd src/MobileSample/
+        dotnet-version: 3.1.101 
     - name: Install dependencies
+      working-directory: src/MobileSample
       run: dotnet restore
     - name: Build
+      working-directory: src/MobileSample
       run: dotnet build --configuration Release --no-restore
     - name: Test
+      working-directory: src/MobileSample
       run: dotnet test --no-restore --verbosity normal
